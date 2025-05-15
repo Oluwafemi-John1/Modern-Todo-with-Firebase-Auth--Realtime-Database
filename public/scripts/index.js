@@ -1,11 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
-import { firebaseConfig } from "./config";
-
+// import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
+// import { firebaseConfig } from "./config";
 
 const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app)
 
 
-const signUserUp = () => {
+const signUpUser = () => {
     const username = document.getElementById('uName').value
     const email = document.getElementById('mail').value
     const password = document.getElementById('pass').value
@@ -16,10 +17,17 @@ const signUserUp = () => {
         const userObj = { username, email, password }
         console.log(userObj);
 
+        // createUserWithEmailAndPassword(auth, email, password)
+        //     .then((userCredential) => {
+        //         const user = userCredential.user;
+        //         console.log(user);
+        //     })
+        //     .catch((error) => {
+        //         const errorCode = error.code;
+        //         console.log(errorCode);
+        //     });
     }
 }
 
 
-
-
-window.signUserUp = signUserUp
+window.signUpUser = signUpUser
