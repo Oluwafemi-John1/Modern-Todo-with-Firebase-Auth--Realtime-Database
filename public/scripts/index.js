@@ -57,6 +57,7 @@ const signGitHub = () => {
         .then((result) => {
             const user = result.user;
             console.log(user);
+            user ? window.location.href = 'dashboard.html' : window.location.href = 'index.html'
         }).catch((error) => {
             const errorCode = error.code;
             console.log(errorCode);
