@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
 import { firebaseConfig } from "./config.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-database.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
@@ -15,7 +15,7 @@ onAuthStateChanged(auth, (user) => {
             <img src=${user.photoURL} alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 100%;" />
         `
     } else {
-        setTimeout(()=>{
+        setTimeout(() => {
             window.location.href = 'signin.html'
         }, 500)
     }
@@ -31,8 +31,21 @@ const addTodo = () => {
         let date = new Date().toLocaleDateString()
         const todoObj = { myTodo, time, date }
         console.log(todoObj);
-        const todoRef = ref(database, 'todos/2')
+        const todoRef = ref(database, 'todos/5')
         set(todoRef, todoObj)
     }
 }
+
+let newRef = ref(database, 'todos')
+onValue(newRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+    display.innerHTML = ''
+    data.map((info, i)=>{
+        display.innerHTML += `
+            <p>${i+1}. <strong>${info.myTodo}</strong></p>
+            <small>${info.time} ${info.date}</small>
+        `
+    })
+});
 window.addTodo = addTodo
